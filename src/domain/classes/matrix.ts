@@ -1,11 +1,17 @@
-// create matrix class
-//
 export class Matrix {
   private rows: number;
   private cols: number;
   private data: number[][];
 
-  constructor(rows?: number, cols?: number, data?: number[][]) {
+  constructor({
+    rows,
+    cols,
+    data,
+  }: {
+    rows?: number;
+    cols?: number;
+    data?: number[][];
+  }) {
     this.rows = rows || data?.length || 0;
     this.cols = cols || data?.[0]?.length || 0;
     this.data = data || [];
@@ -45,7 +51,7 @@ export class Matrix {
       throw new Error("Matrix dimensions must match");
     }
 
-    const result = new Matrix(this.rows, this.cols);
+    const result = new Matrix({ rows: this.rows, cols: this.cols });
 
     for (let i = 0; i < this.rows; i++) {
       for (let j = 0; j < this.cols; j++) {
@@ -61,7 +67,7 @@ export class Matrix {
       throw new Error("Matrix dimensions must match");
     }
 
-    const result = new Matrix(this.rows, matrix.getCols());
+    const result = new Matrix({ rows: this.rows, cols: matrix.getCols() });
 
     for (let i = 0; i < this.rows; i++) {
       for (let j = 0; j < matrix.getCols(); j++) {

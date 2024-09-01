@@ -28,3 +28,10 @@ export type TMatrixProps = {
   matrix: TMatrix;
   rules?: TMatrixRules;
 };
+
+export type TLeslieMatrixProps = {
+  matrix: TMatrix;
+  rules?: TMatrixRules;
+  header?: string[];
+  firstCol?: string[];
+};

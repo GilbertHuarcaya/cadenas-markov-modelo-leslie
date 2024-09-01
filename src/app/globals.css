@@ -85,4 +85,42 @@
   body {
     @apply bg-background text-foreground;
   }
+  .button-primary {
+    @apply p-2 bg-blue-500 text-white rounded-lg
+  }
+}
+
+.presentation-container {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.student-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.student-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.student-name {
+  font-weight: bold;
+}
+
+.student-id {
+  padding-left: 20px;
+  color: #555;
 }
