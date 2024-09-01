@@ -1,3 +1,4 @@
+"use client"
 import { TMatrixProps } from "@/domain/types/matrix";
 import React from "react";
 import Matrix from "./Matrix";

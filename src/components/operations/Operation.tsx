@@ -10,9 +10,9 @@ import { Input } from "../ui/input";
 
 const Operation = () => {
   const [result, setResult] = useState<Matrix | undefined>();
-  const matriz = new Matrix(4, 4);
-  const vectorProb = new Matrix(4, 1, [[0.25], [0.25], [0.25], [0.25]]);
-  const [years, setYears] = useState(1); // veces que se tiene que iterar
+  const matriz = new Matrix({rows: 4, cols:4});
+  const vectorProb = new Matrix({rows: 4, cols: 1});
+  const [periods, setperiods] = useState(1); // veces que se tiene que iterar
   const [matrices, setMatrices] = useState([matriz, vectorProb]);
   /*   const [matrixHistory, setMatrixHistory] = useState<Matrix[]>([]);
   const [vector, setVector] = useState(vectorProb); */
@@ -23,7 +23,7 @@ const Operation = () => {
       return acc.multiply(matrix);
     }); */
 
-    const result = matrices[0].iterateWithMatrixNTimes(matrices[1], years);
+    const result = matrices[0].iterateWithMatrixNTimes(matrices[1], periods);
     setResult(result);
   };
 
@@ -42,11 +42,11 @@ const Operation = () => {
         </div>
       ))}
       <Input
-        defaultValue={years}
+        defaultValue={periods}
         type="number"
         min={1}
         placeholder="Repetir N veces"
-        onChange={(e) => setYears(Number(e.target.value))}
+        onChange={(e) => setperiods(Number(e.target.value))}
       />
       {<Button onClick={() => multiplyMatrixInArray(matrices)}>=</Button>}
       {result ? <Matriz matrix={result} rules={{ isEditable: false, toFixed: 2 }} /> : null}
