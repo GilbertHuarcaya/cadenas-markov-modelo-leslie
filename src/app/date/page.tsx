@@ -15,7 +15,7 @@ const DatePage = () => {
         <p>{dateString}</p>
         <p>{localeString}</p>
       </div>
-      <h2>Server Date</h2>
+      <h2>Server Date moment</h2>
       <ClientDate />
       <h2>Server Date Now</h2>
       <DateNow />

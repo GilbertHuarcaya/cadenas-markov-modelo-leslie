@@ -26,7 +26,7 @@ const DateState = () => {
         onClick={() => setDateState(new Date(Date.now()))}>
         Set Date Now
       </button>
-      <h2>Client Date</h2>
+      <h2>Client Date moment</h2>
       <ClientDate />
       <h2>Client Date Now</h2>
       <DateNow />
