@@ -10,7 +10,11 @@ const DateState = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setDateState(new Date());
+      setDateState(
+        new Date(
+          new Date().toLocaleString("es", { timeZone: "America/Bogota" })
+        )
+      );
     }, 1000);
 
     const interval2 = setInterval(() => {
@@ -46,7 +50,13 @@ const DateState = () => {
       )}
       <button
         className="bg-black text-white"
-        onClick={() => setDateState(new Date())}>
+        onClick={() =>
+          setDateState(
+            new Date(
+              new Date().toLocaleString("es", { timeZone: "America/Bogota" })
+            )
+          )
+        }>
         Set Date
       </button>
       <button

@@ -2,7 +2,9 @@ import React from "react";
 import moment from "moment";
 
 const ClientDate = () => {
-  const clientDate = moment.utc(new Date(Date.now())).toDate();
+  const clientDate = new Date(
+    new Date().toLocaleString("es", { timeZone: "America/Bogota" })
+  );
   const dateString = clientDate.toString();
   const localeString = clientDate.toLocaleString();
 
