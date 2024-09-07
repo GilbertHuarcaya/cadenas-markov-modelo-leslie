@@ -10,6 +10,7 @@ const especie1 = {
   probabilidadDeSupervivencia: {
     joven_juvenil: 0.8,
     juvenil_adulto: 0.7,
+    permanecer_adulto: 1,
   },
   poblacionInicial: {
     joven: 100,
@@ -30,6 +31,7 @@ const especie2 = {
   probabilidadDeSupervivencia: {
     joven_juvenil: 0.8,
     juvenil_adulto: 0.7,
+    permanecer_adulto: 1,
   },
   poblacionInicial: {
     joven: 100,
@@ -50,6 +52,7 @@ const especie3 = {
   probabilidadDeSupervivencia: {
     joven_juvenil: 0.8,
     juvenil_adulto: 0.7,
+    permanecer_adulto: 0,
   },
   poblacionInicial: {
     joven: 100,
@@ -60,21 +63,23 @@ const especie3 = {
 
 const especie4 = {
   id: 4,
-  nombre: "Conejo",
-  descripcion: "Animal doméstico",
+  nombre: "Ceroxylon quindiuense",
+  descripcion:
+    "La palma de cera del Quindío (Ceroxylon quindiuense) es una palma nativa de los bosques montañosos húmedos andinos del parque nacional natural Los Nevados, en Colombia.",
   tasaNatalidadPromedio: {
     joven: 0,
-    juvenil: 0.2,
-    adulto: 0.3,
+    juvenil: 0,
+    adulto: 0.459,
   },
   probabilidadDeSupervivencia: {
-    joven_juvenil: 0.8,
-    juvenil_adulto: 0.7,
+    joven_juvenil: 0.219,
+    juvenil_adulto: 0.078,
+    permanecer_adulto: 1,
   },
   poblacionInicial: {
-    joven: 100,
-    juvenil: 50,
-    adulto: 25,
+    joven: 639,
+    juvenil: 140,
+    adulto: 11,
   },
 };
 

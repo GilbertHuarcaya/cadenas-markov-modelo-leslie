@@ -1,6 +1,8 @@
 import calculatePredictionHistorial from "@/actions/calculatePredictionHistorial";
+import calculatePredictionLong from "@/actions/calculatePredictionLong";
 import LeslieMatrix from "@/components/matrix/LeslieMatrix";
 import Vector from "@/components/matrix/Vector";
+import { Card } from "@/components/ui/card";
 import { especies } from "@/db/especies";
 import { vectorHistory } from "@/db/vectorHistory";
 import { Matrix } from "@/domain/classes/matrix";
@@ -37,12 +39,12 @@ export default function Especie({
   //    |         | joven | juvenil | adulto |
   //   | joven   | 0     | 0.2     | 0.3    | <- tasaNatalidadPromedio
   //  | juvenil | 0.8   | 0       | 0      | <- probabilidadDeSupervivencia joven_juvenil
-  // | adulto  | 0     | 50      | 0      | <- probabilidadDeSupervivencia juvenil_adulto
+  // | adulto  | 0     | 50      | 0      | <- probabilidadDeSupervivencia juvenil_adulto y permanecer_adulto
 
   const leslieMatrixData = [
     [TN.joven, TN.juvenil, TN.adulto],
     [PS.joven_juvenil, 0, 0],
-    [0, PS.juvenil_adulto, 0],
+    [0, PS.juvenil_adulto, PS.permanecer_adulto],
   ];
 
   const initialPopulationMatrix = new Matrix({
@@ -75,9 +77,9 @@ export default function Especie({
         <div className="mt-4">
           <h2 className="text-xl font-semibold">Tasa de Natalidad Promedio</h2>
           <ul className="list-disc list-inside">
-            <li>Joven: {TN.joven}</li>
-            <li>Juvenil: {TN.juvenil}</li>
-            <li>Adulto: {TN.adulto}</li>
+            <li>Joven: {TN.joven * 100} %</li>
+            <li>Juvenil: {TN.juvenil * 100} %</li>
+            <li>Adulto: {TN.adulto * 100} %</li>
           </ul>
         </div>
         <div className="mt-4">
@@ -85,8 +87,13 @@ export default function Especie({
             Probabilidad de Supervivencia
           </h2>
           <ul className="list-disc list-inside">
-            <li>Joven a Juvenil: {PS.joven_juvenil}</li>
-            <li>Juvenil a Adulto: {PS.juvenil_adulto}</li>
+            <li>Joven a Juvenil: {PS.joven_juvenil * 100} %</li>
+            <li>Juvenil a Adulto: {PS.juvenil_adulto * 100} %</li>
+            <li>
+              {`Permanecer Adulto despues de un paso en el tiempo: ${
+                PS.permanecer_adulto * 100
+              } %`}
+            </li>
           </ul>
         </div>
       </div>
@@ -95,6 +102,25 @@ export default function Especie({
         header={["", ...header]}
         firstCol={header}
       />
+      {/* <form className="flex gap-4 mt-4" action={calculatePredictionLong}>
+        <input
+          type="text"
+          name="leslieMatrix"
+          defaultValue={JSON.stringify(leslieMatrix)}
+          className="p-2 border border-gray-300 rounded-lg"
+          hidden
+        />
+        <input
+          type="number"
+          name="id"
+          defaultValue={parseInt(id_especie)}
+          className="p-2 border border-gray-300 rounded-lg"
+          hidden
+        />
+        <button className="p-2 bg-blue-500 text-white rounded-lg">
+          Calcular
+        </button>
+      </form> */}
       <h2 className="text-xl font-semibold">Predicion de Población</h2>
       <form className="flex gap-4 mt-4" action={calculatePredictionHistorial}>
         <input
@@ -132,7 +158,7 @@ export default function Especie({
       <div className="flex flex-col gap-4">
         {especieVectorHistory?.map((vector, i) => {
           return (
-            <>
+            <Card key={i} className="flex flex-col p-3 gap-3">
               <h3 className="text-xl font-semibold">
                 En {i + 1} periodo{i >= 1 ? "s" : ""}
               </h3>
@@ -150,7 +176,7 @@ export default function Especie({
                   <Vector matrix={i === 0 ? especieVectorHistory[0] : vector} />
                 </div>
               </div>
-            </>
+            </Card>
           );
         })}
       </div>
