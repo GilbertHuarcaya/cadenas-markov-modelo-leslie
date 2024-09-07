@@ -2,7 +2,7 @@ import React from "react";
 import moment from "moment";
 
 const ClientDate = () => {
-  const clientDate = moment.utc().toDate();
+  const clientDate = moment.utc(new Date(Date.now())).toDate();
   const dateString = clientDate.toString();
   const localeString = clientDate.toLocaleString();
 
