@@ -1,7 +1,7 @@
 import React from "react";
 
 const ClientDateNow = () => {
-  const clientDate = new Date(Date.now());
+  const clientDate = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const dateString = clientDate.toString();
   const localeString = clientDate.toLocaleString();
 
