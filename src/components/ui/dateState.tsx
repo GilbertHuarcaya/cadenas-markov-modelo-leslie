@@ -19,7 +19,9 @@ const DateState = () => {
     <div className="flex flex-col gap-3">
       <p>{JSON.stringify(filters)}</p>
       <p>{filters[0]?.filterValue}</p>
-      <p>{new Date(filters[0]?.filterValue).toLocaleDateString("es-CO")}</p>
+      <p>{filters[1]?.filterValue}</p>
+      <p>{new Date(filters[0]?.filterValue).toLocaleString("es-CO")}</p>
+      <p>{new Date(filters[1]?.filterValue).toLocaleString("es-CO")}</p>
       <div className="flex flex-col">
         <button
           className="bg-black text-white"
