@@ -17,6 +17,7 @@ const DateState = () => {
     getServerOnlyDaysDifference,
     days,
     getGlobalConversorOnlyDaysDifference,
+    getServerCovertedOnlyDaysDifference,
   } = useDateFilter();
 
   return (
@@ -73,16 +74,25 @@ const DateState = () => {
         </button>
         <div className="flex flex-col gap-3">
           <p>{days}</p>
-          <input
-            type="datetime-local"
-            onChange={(e) =>
-              getOnlyDaysDifference(e.currentTarget.value)
-            }></input>
+          <h2>server day</h2>
           <input
             type="datetime-local"
             onChange={(e) =>
               getServerOnlyDaysDifference(e.currentTarget.value)
             }></input>
+          <h2>server converted day</h2>
+          <input
+            type="datetime-local"
+            onChange={(e) =>
+              getServerCovertedOnlyDaysDifference(e.currentTarget.value)
+            }></input>
+          <h2>client day</h2>
+          <input
+            type="datetime-local"
+            onChange={(e) =>
+              getOnlyDaysDifference(e.currentTarget.value)
+            }></input>
+          <h2>client converted day</h2>
           <input
             type="datetime-local"
             onChange={(e) =>
