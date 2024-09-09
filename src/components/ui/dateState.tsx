@@ -11,45 +11,61 @@ const DateState = () => {
     onServerButtonClick,
     onClientButtonClick,
     onClientToSystemButtonClick,
+    onServerConvertedButtonClick,
     filters,
   } = useDateFilter();
 
   return (
     <div className="flex flex-col gap-3">
       <p>{JSON.stringify(filters)}</p>
-
-      <button
-        className="bg-black text-white"
-        onClick={() => onServerButtonClick(EDeadLineFilters.FUTURE)}>
-        Set future server Date
-      </button>
-      <button
-        className="bg-black text-white"
-        onClick={() => onClientButtonClick(EDeadLineFilters.FUTURE)}>
-        Set future client date
-      </button>
-      <button
-        className="bg-black text-white"
-        onClick={() => onClientToSystemButtonClick(EDeadLineFilters.FUTURE)}>
-        Set future client date to system
-      </button>
-
-      <button
-        className="bg-black text-white"
-        onClick={() => onServerButtonClick(EDeadLineFilters.OVERDUE)}>
-        Set OVERDUE server Date
-      </button>
-      <button
-        className="bg-black text-white"
-        onClick={() => onClientButtonClick(EDeadLineFilters.OVERDUE)}>
-        Set OVERDUE client date
-      </button>
-      <button
-        className="bg-black text-white"
-        onClick={() => onClientToSystemButtonClick(EDeadLineFilters.OVERDUE)}>
-        Set OVERDUE client date to system
-      </button>
-
+      <p>{filters[0]?.filterValue}</p>
+      <p>{new Date(filters[0]?.filterValue).toLocaleDateString("es-CO")}</p>
+      <div className="flex flec-col">
+        <button
+          className="bg-black text-white"
+          onClick={() => onServerButtonClick(EDeadLineFilters.FUTURE)}>
+          Set future server Date
+        </button>
+        <button
+          className="bg-black text-white"
+          onClick={() => onServerConvertedButtonClick(EDeadLineFilters.FUTURE)}>
+          Set future server Date Converted
+        </button>
+        <button
+          className="bg-black text-white"
+          onClick={() => onClientButtonClick(EDeadLineFilters.FUTURE)}>
+          Set future client date
+        </button>
+        <button
+          className="bg-black text-white"
+          onClick={() => onClientToSystemButtonClick(EDeadLineFilters.FUTURE)}>
+          Set future client date to system
+        </button>
+      </div>
+      <div className="flex flec-col">
+        <button
+          className="bg-black text-white"
+          onClick={() =>
+            onServerConvertedButtonClick(EDeadLineFilters.OVERDUE)
+          }>
+          Set OVERDUE server Date Converted
+        </button>
+        <button
+          className="bg-black text-white"
+          onClick={() => onServerButtonClick(EDeadLineFilters.OVERDUE)}>
+          Set OVERDUE server Date
+        </button>
+        <button
+          className="bg-black text-white"
+          onClick={() => onClientButtonClick(EDeadLineFilters.OVERDUE)}>
+          Set OVERDUE client date
+        </button>
+        <button
+          className="bg-black text-white"
+          onClick={() => onClientToSystemButtonClick(EDeadLineFilters.OVERDUE)}>
+          Set OVERDUE client date to system
+        </button>
+      </div>
       <h2>CONSTANT DATES</h2>
 
       <h2>Client Date moment</h2>
