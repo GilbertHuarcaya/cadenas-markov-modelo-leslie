@@ -5,8 +5,8 @@ import React from "react";
 
 const DatePage = () => {
   const serverDate = new Date();
-  const dateString = serverDate.toString();
-  const localeString = serverDate.toLocaleString();
+  const dateString = serverDate.toISOString();
+  const localeString = serverDate.toLocaleString("es-CO");
 
   return (
     <div className="flex flex-col gap-2 w-full justify-center items-center">
