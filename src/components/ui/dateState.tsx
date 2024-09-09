@@ -13,6 +13,10 @@ const DateState = () => {
     onClientToSystemButtonClick,
     onServerConvertedButtonClick,
     filters,
+    getOnlyDaysDifference,
+    getServerOnlyDaysDifference,
+    days,
+    getGlobalConversorOnlyDaysDifference,
   } = useDateFilter();
 
   return (
@@ -22,7 +26,7 @@ const DateState = () => {
       <p>{filters[1]?.filterValue}</p>
       <p>{new Date(filters[0]?.filterValue).toLocaleString("es-CO")}</p>
       <p>{new Date(filters[1]?.filterValue).toLocaleString("es-CO")}</p>
-      <div className="flex flex-col">
+      <div className="flex flex-col gap-3">
         <button
           className="bg-black text-white"
           onClick={() => onServerButtonClick(EDeadLineFilters.FUTURE)}>
@@ -44,7 +48,7 @@ const DateState = () => {
           Set future client date to system
         </button>
       </div>
-      <div className="flex flex-col">
+      <div className="flex flex-col gap-3">
         <button
           className="bg-black text-white"
           onClick={() =>
@@ -67,6 +71,24 @@ const DateState = () => {
           onClick={() => onClientToSystemButtonClick(EDeadLineFilters.OVERDUE)}>
           Set OVERDUE client date to system
         </button>
+        <div className="flex flex-col gap-3">
+          <p>{days}</p>
+          <input
+            type="datetime-local"
+            onChange={(e) =>
+              getOnlyDaysDifference(e.currentTarget.value)
+            }></input>
+          <input
+            type="datetime-local"
+            onChange={(e) =>
+              getServerOnlyDaysDifference(e.currentTarget.value)
+            }></input>
+          <input
+            type="datetime-local"
+            onChange={(e) =>
+              getGlobalConversorOnlyDaysDifference(e.currentTarget.value)
+            }></input>
+        </div>
       </div>
       <h2>CONSTANT DATES</h2>
 
