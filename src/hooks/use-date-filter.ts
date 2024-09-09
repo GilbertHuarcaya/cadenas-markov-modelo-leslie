@@ -182,6 +182,7 @@ const useDateFilter = () => {
     getServerOnlyDaysDifference,
     days,
     getGlobalConversorOnlyDaysDifference,
+    getServerCovertedOnlyDaysDifference,
   };
 };
 
