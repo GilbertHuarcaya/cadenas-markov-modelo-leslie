@@ -80,15 +80,13 @@ export const convertDBDateToLocaleTimeZone = (
  */
 export const convertLocalToSystemTimeZone = (localDate: number | string | Date) => {
   // Create a Date object from the input date (assumed to be in the local timezone)
-  const date = new Date(localDate);
+  const systemOffset = TIMEZONE_TRANSFORM.offset;
 
-  // Get the UTC time in milliseconds
-  const utcTime = date.getTime() + date.getTimezoneOffset() * 60000; // Correct the timezone offset in milliseconds
+  const date = new Date(localDate); // 'Z' indicates UTC
+  const utcOffsetInMinutes = systemOffset * 60;
+  const localeTimeDate = new Date(
+    date.getTime() - utcOffsetInMinutes * 60 * 1000
+  );
 
-  const systemOffset = TIMEZONE_TRANSFORM.offset * 60; //in minutes
-
-  // Calculate the time in system timezone
-  const systemTime = new Date(utcTime + systemOffset * 60 * 1000);
-
-  return systemTime;
+  return localeTimeDate;
 };
