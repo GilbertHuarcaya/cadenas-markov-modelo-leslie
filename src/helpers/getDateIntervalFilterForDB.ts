@@ -1,12 +1,16 @@
-
 import { EDeadLineFilters } from "@/domain/constants/components";
-import { convertToSystemTimezone, convertToDateWithoutTimezone } from "./convertToSystemTimezone";
+import {
+  convertToSystemTimezone,
+  convertToDateWithoutTimezone,
+  convertLocalToSystemTimeZone,
+} from "./convertToSystemTimezone";
 
 export const getDeadLineInterval = (
   filter: EDeadLineFilters,
   currentTime?: string
 ) => {
-  const now = new Date(currentTime || convertToSystemTimezone(new Date()));
+  const cDate = new Date(currentTime || new Date());
+  const now = convertLocalToSystemTimeZone(cDate);
 
   const setStartOfDay = (date: Date) => {
     const newDate = new Date(date);
