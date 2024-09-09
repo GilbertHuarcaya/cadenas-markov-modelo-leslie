@@ -3,73 +3,55 @@ import React, { useEffect, useState } from "react";
 import DateNow from "./dateNow";
 import ClientDate from "./date";
 import moment from "moment";
+import useDateFilter from "@/hooks/use-date-filter";
+import { EDeadLineFilters } from "@/domain/constants/components";
 
 const DateState = () => {
-  const [dateState, setDateState] = useState<Date>();
-  const [dateMoment, setDateMoment] = useState<Date>();
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setDateState(
-        new Date(
-          new Date().toLocaleString("es", { timeZone: "America/Bogota" })
-        )
-      );
-    }, 1000);
-
-    const interval2 = setInterval(() => {
-      setDateMoment(moment.utc(new Date(Date.now())).toDate());
-    }, 1000);
-
-    return () => {
-      clearInterval(interval);
-      clearInterval(interval2);
-    };
-  }, []);
+  const {
+    onServerButtonClick,
+    onClientButtonClick,
+    onClientToSystemButtonClick,
+    filters,
+  } = useDateFilter();
 
   return (
     <div className="flex flex-col gap-3">
-      <p>{JSON.stringify(dateState)}</p>
-      {dateState ? (
-        <>
-          <p>{dateState?.toString()}</p>
-          <p>{dateState?.toLocaleString()}</p>
-        </>
-      ) : (
-        <>No hay fecha</>
-      )}
-      <h2>Moment</h2>
-      <p>{JSON.stringify(dateMoment)}</p>
-      {dateState ? (
-        <>
-          <p>{dateMoment?.toString()}</p>
-          <p>{dateMoment?.toLocaleString()}</p>
-        </>
-      ) : (
-        <>No hay fecha</>
-      )}
+      <p>{JSON.stringify(filters)}</p>
+
       <button
         className="bg-black text-white"
-        onClick={() =>
-          setDateState(
-            new Date(
-              new Date().toLocaleString("es", { timeZone: "America/Bogota" })
-            )
-          )
-        }>
-        Set Date
+        onClick={() => onServerButtonClick(EDeadLineFilters.FUTURE)}>
+        Set future server Date
       </button>
       <button
         className="bg-black text-white"
-        onClick={() => setDateState(new Date(Date.now()))}>
-        Set Date Now
+        onClick={() => onClientButtonClick(EDeadLineFilters.FUTURE)}>
+        Set future client date
+      </button>
+      <button
+        className="bg-black text-white"
+        onClick={() => onClientToSystemButtonClick(EDeadLineFilters.FUTURE)}>
+        Set future client date to system
       </button>
 
       <button
         className="bg-black text-white"
-        onClick={() => moment.utc(new Date(Date.now())).toDate()}>
-        Set Date Now
+        onClick={() => onServerButtonClick(EDeadLineFilters.OVERDUE)}>
+        Set OVERDUE server Date
       </button>
+      <button
+        className="bg-black text-white"
+        onClick={() => onClientButtonClick(EDeadLineFilters.OVERDUE)}>
+        Set OVERDUE client date
+      </button>
+      <button
+        className="bg-black text-white"
+        onClick={() => onClientToSystemButtonClick(EDeadLineFilters.OVERDUE)}>
+        Set OVERDUE client date to system
+      </button>
+
+      <h2>CONSTANT DATES</h2>
+
       <h2>Client Date moment</h2>
       <ClientDate />
       <h2>Client Date Now</h2>

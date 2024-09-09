@@ -10,6 +10,7 @@ const DatePage = () => {
 
   return (
     <div className="flex flex-col gap-2 w-full justify-center items-center">
+      <h1>Server DATES</h1>
       <div className="flex flex-col">
         <p>{JSON.stringify(serverDate)}</p>
         <p>{dateString}</p>
@@ -20,7 +21,7 @@ const DatePage = () => {
       <h2>Server Date Now</h2>
       <DateNow />
 
-      <h1>Client Dates</h1>
+      <h1>Client DATES</h1>
       <DateState />
     </div>
   );
