@@ -1,3 +1,4 @@
+import { abs, max, eigs } from "mathjs";
 export class Matrix {
   private rows: number;
   private cols: number;
@@ -94,6 +95,15 @@ export class Matrix {
     }
 
     return result;
+  }
+
+  leslieEstacionario() {
+    const { values, eigenvectors } = eigs(this.data);
+    const maxIndex = max(max(abs(values)));
+    let vectors = eigenvectors.map((row) => max(row.value));
+    const vecDom = eigenvectors.find((row) => maxIndex === row.value);
+
+    return new Matrix({ data: [] });
   }
 
   isNonNegativeAndColumnSumIsOne(): boolean {

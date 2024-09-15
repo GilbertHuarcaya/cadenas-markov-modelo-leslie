@@ -9,7 +9,7 @@ const EspeciesView = () => {
       {especies.map((especie) => (
         <Link href={`/especies/${especie.id}`} key={especie.id}>
           <Card className={`p-4`}>
-            <h1>{especie.nombre}</h1>
+            <h1 className="font-bold">{especie.nombre}</h1>
             <p>{especie.descripcion}</p>
           </Card>
         </Link>
