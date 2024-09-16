@@ -25,7 +25,7 @@ export type TMatrixRules = {
   toFixed?: number
 };
 export type TMatrixProps = {
-  matrix?: TMatrix;
+  matrix: TMatrix;
   rules?: TMatrixRules;
 };
 
