@@ -1,5 +1,7 @@
 import calculatePredictionHistorial from "@/actions/calculatePredictionHistorial";
 import calculatePredictionLong from "@/actions/calculatePredictionLong";
+import ExplanationAmount from "@/components/explanation/ExplanationAmount";
+import ExplanationPercentaje from "@/components/explanation/ExplanationPercentage";
 import LeslieMatrix from "@/components/matrix/LeslieMatrix";
 import ServerMatrix from "@/components/matrix/ServerMatrix";
 import Vector from "@/components/matrix/Vector";
@@ -21,6 +23,12 @@ export default function Especie({
     (especie) => especie.id === parseInt(id_especie)
   )?.history;
 
+  const lastSpecieVector = especieVectorHistory?.at(-1);
+
+  const stationaryVector = vectorHistory.find(
+    (especie) => especie.id === parseInt(id_especie)
+  )?.stationaryVector;
+
   if (!especie) {
     return <div>especie no encontrada</div>;
   }
@@ -37,10 +45,6 @@ export default function Especie({
       return [value];
     }
   );
-  //    |         | joven | juvenil | adulto |
-  //   | joven   | 0     | 0.2     | 0.3    | <- tasaNatalidadPromedio
-  //  | juvenil | 0.8   | 0       | 0      | <- probabilidadDeSupervivencia joven_juvenil
-  // | adulto  | 0     | 50      | 0      | <- probabilidadDeSupervivencia juvenil_adulto y permanecer_adulto
 
   const leslieMatrixData = [
     [TN.joven, TN.juvenil, TN.adulto],
@@ -106,91 +110,148 @@ export default function Especie({
       <h2 className="text-xl font-semibold">Vector de Población Actual</h2>
       <Vector matrix={initialPopulationMatrix} />
 
-      <h2 className="text-xl font-semibold">Predicion de Población</h2>
-      <form className="flex gap-4 mt-4" action={calculatePredictionHistorial}>
-        <input
-          type="number"
-          name="periods"
-          min={1}
-          placeholder="Periodos"
-          className="p-2 border border-gray-300 rounded-lg"
-        />
-        <input
-          type="text"
-          name="leslieMatrix"
-          defaultValue={JSON.stringify(leslieMatrix)}
-          className="p-2 border border-gray-300 rounded-lg"
-          hidden
-        />
-        <input
-          type="text"
-          name="initialPopulation"
-          defaultValue={JSON.stringify(initialPopulationMatrix)}
-          className="p-2 border border-gray-300 rounded-lg"
-          hidden
-        />
-        <input
-          type="number"
-          name="id"
-          defaultValue={parseInt(id_especie)}
-          className="p-2 border border-gray-300 rounded-lg"
-          hidden
-        />
-        <button className="p-2 bg-blue-500 text-white rounded-lg">
-          Calcular
-        </button>
-      </form>
+      <Card className="flex flex-col p-3 gap-3">
+        <h2 className="text-xl font-semibold">
+          Calcular vector con la población en el periodo n
+        </h2>
+        <form className="flex gap-4 mt-4" action={calculatePredictionHistorial}>
+          <input
+            type="number"
+            name="periods"
+            min={1}
+            placeholder="Periodos"
+            className="p-2 border border-gray-300 rounded-lg"
+          />
+          <input
+            type="text"
+            name="leslieMatrix"
+            defaultValue={JSON.stringify(leslieMatrix)}
+            className="p-2 border border-gray-300 rounded-lg"
+            hidden
+          />
+          <input
+            type="text"
+            name="initialPopulation"
+            defaultValue={JSON.stringify(initialPopulationMatrix)}
+            className="p-2 border border-gray-300 rounded-lg"
+            hidden
+          />
+          <input
+            type="number"
+            name="id"
+            defaultValue={parseInt(id_especie)}
+            className="p-2 border border-gray-300 rounded-lg"
+            hidden
+          />
+          <button className="p-2 bg-blue-500 text-white rounded-lg">
+            Calcular
+          </button>
+        </form>
+        {lastSpecieVector && lastSpecieVector !== undefined ? (
+          <>
+            <Card className="flex flex-col p-3 gap-3">
+              <div className="flex ">
+                <div className="flex gap-4 items-center">
+                  <h2 className="text-xl font-semibold">
+                    Vector con la poblacion en el periodo{" "}
+                    {especieVectorHistory?.length}
+                  </h2>
+                  <Vector matrix={lastSpecieVector} rules={{ toFixed: 4 }} />
+                  <div className="flex flex-col gap-3">
+                    {lastSpecieVector?.getData()?.map((array, index) => (
+                      <div key={index} className="flex gap-3">
+                        <p>
+                          {index == 0 ? "Jovenes: " : null}
+                          {index == 1 ? "Juveniles: " : null}
+                          {index == 2 ? "Adultos: " : null}
+                        </p>
+                        <p>{array[0].toFixed(0)}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </Card>
+            <ExplanationAmount
+              data={[
+                { type: "joven", value: lastSpecieVector.getValue(0, 0) },
+                { type: "juvenil", value: lastSpecieVector.getValue(1, 0) },
+                { type: "adulto", value: lastSpecieVector.getValue(2, 0) },
+              ]}
+              periods={especieVectorHistory?.length || 0}
+            />
+          </>
+        ) : null}
+      </Card>
 
-      {especieVectorHistory?.at(-1) !== undefined ? (
-        <Card className="flex flex-col p-3 gap-3">
-          <div className="flex ">
-            <div className="flex gap-4 items-center">
-              <h2 className="text-xl font-semibold">
-                Vector con la poblacion en el periodo{" "}
-                {especieVectorHistory.length}
-              </h2>
-              <Vector
-                matrix={especieVectorHistory?.at(-1)}
-                rules={{ toFixed: 4 }}
-              />
-            </div>
-          </div>
-        </Card>
-      ) : null}
-
-      {/* <form className="flex gap-4 mt-4" action={calculatePredictionLong}>
-        <input
-          type="text"
-          name="leslieMatrix"
-          defaultValue={JSON.stringify(leslieMatrix)}
-          className="p-2 border border-gray-300 rounded-lg"
-          hidden
-        />
-        <input
-          type="number"
-          name="id"
-          defaultValue={parseInt(id_especie)}
-          className="p-2 border border-gray-300 rounded-lg"
-          hidden
-        />
-        <button className="p-2 bg-blue-500 text-white rounded-lg">
-          Calcular
-        </button>
-      </form> */}
-      {/* <Card className="flex flex-col p-3 gap-3">
-        <div className="flex ">
-          <div className="flex gap-4 items-center">
-            {especieVectorHistory?.at(-1) !== undefined ? (
-              <>
-                <h2 className="text-xl font-semibold">
-                  Vector con la poblacion a largo plazo
-                </h2>
-                <Vector matrix={especieVectorHistory?.at(-1)} />
-              </>
-            ) : null}
-          </div>
-        </div>
-      </Card> */}
+      <Card className="flex flex-col p-3 gap-3">
+        <h2 className="text-xl font-semibold">
+          Calcular el vector con la distribución de la población a largo plazo
+        </h2>
+        <form className="flex gap-4 mt-4" action={calculatePredictionLong}>
+          <input
+            type="text"
+            name="leslieMatrix"
+            defaultValue={JSON.stringify(leslieMatrix)}
+            className="p-2 border border-gray-300 rounded-lg"
+            hidden
+          />
+          <input
+            type="number"
+            name="id"
+            defaultValue={parseInt(id_especie)}
+            className="p-2 border border-gray-300 rounded-lg"
+            hidden
+          />
+          <button className="p-2 bg-blue-500 text-white rounded-lg">
+            Calcular
+          </button>
+        </form>
+        {stationaryVector && stationaryVector?.length !== 0 ? (
+          <>
+            <Card className="flex flex-col p-3 gap-3">
+              <div className="flex ">
+                <div className="flex gap-4 items-center">
+                  <h2 className="text-xl font-semibold">Vector Estacionario</h2>
+                  <Vector
+                    matrix={
+                      new Matrix({
+                        data: stationaryVector.map((value) => [value]),
+                      })
+                    }
+                    rules={{ toFixed: 4 }}
+                  />
+                  <div className="flex flex-col gap-3">
+                    {stationaryVector?.map((percentaje) => (
+                      <div key={percentaje} className="flex gap-3">
+                        <p>
+                          {percentaje === stationaryVector[0]
+                            ? "Jovenes: "
+                            : null}
+                          {percentaje === stationaryVector[1]
+                            ? "Juveniles: "
+                            : null}
+                          {percentaje === stationaryVector[2]
+                            ? "Adultos: "
+                            : null}
+                        </p>
+                        <p>{(percentaje * 100).toFixed(2)}%</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </Card>
+            <ExplanationPercentaje
+              data={[
+                { type: "joven", value: stationaryVector[0] },
+                { type: "juvenil", value: stationaryVector[1] },
+                { type: "adulto", value: stationaryVector[2] },
+              ]}
+            />
+          </>
+        ) : null}
+      </Card>
       {!!especieVectorHistory && especieVectorHistory?.length > 0 ? (
         <>
           <h2 className="text-xl font-semibold">

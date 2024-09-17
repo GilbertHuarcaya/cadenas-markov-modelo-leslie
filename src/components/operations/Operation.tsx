@@ -10,46 +10,60 @@ import { Input } from "../ui/input";
 
 const Operation = () => {
   const [result, setResult] = useState<Matrix | undefined>();
-  const matriz = new Matrix({rows: 4, cols:4});
-  const vectorProb = new Matrix({rows: 4, cols: 1});
-  const [periods, setperiods] = useState(1); // veces que se tiene que iterar
+  const matriz = new Matrix({ rows: 3, cols: 3 });
+  const vectorProb = new Matrix({ rows: 3, cols: 1 });
+  const [periods, setperiods] = useState(1);
   const [matrices, setMatrices] = useState([matriz, vectorProb]);
-  /*   const [matrixHistory, setMatrixHistory] = useState<Matrix[]>([]);
-  const [vector, setVector] = useState(vectorProb); */
 
   const multiplyMatrixInArray = (matrices: Matrix[]) => {
-
-    /* const result = matrices.reduce((acc, matrix) => {
-      return acc.multiply(matrix);
-    }); */
-
     const result = matrices[0].iterateWithMatrixNTimes(matrices[1], periods);
     setResult(result);
   };
 
   return (
-    <Card className="flex items-center gap-5 p-3">
+    <Card className="flex gap-5 p-3">
       {matrices.map((matrix, i) => (
-        <div key={i} className="flex items-center gap-5">
-          {matrix.isStochastic() ? (
-            <MatrizEstocastica matrix={matrix} rules={{ isEditable: true }} />
+        <div key={i} className="flex flex-col flex-grow justify-between gap-2">
+          {matrix.isSquare() ? (
+            <>
+              <p className="text-center">Matriz de Leslie</p>
+              <MatrizEstocastica matrix={matrix} rules={{ isEditable: true }} />
+            </>
           ) : (
-            <VectorDeProbabilidades
-              matrix={matrix}
-              rules={{ isEditable: true }}
-            />
+            <>
+              <p className="text-center">Vector</p>
+              <VectorDeProbabilidades
+                matrix={matrix}
+                rules={{ isEditable: true }}
+              />
+            </>
           )}
         </div>
       ))}
-      <Input
-        defaultValue={periods}
-        type="number"
-        min={1}
-        placeholder="Repetir N veces"
-        onChange={(e) => setperiods(Number(e.target.value))}
-      />
-      {<Button onClick={() => multiplyMatrixInArray(matrices)}>=</Button>}
-      {result ? <Matriz matrix={result} rules={{ isEditable: false, toFixed: 2 }} /> : null}
+      <div className="flex flex-col flex-grow justify-between gap-2">
+        <p className="text-center">Periodo(s)</p>
+        <Input
+          defaultValue={periods}
+          type="number"
+          min={1}
+          placeholder="Repetir N veces"
+          className="self-end"
+          onChange={(e) => setperiods(Number(e.target.value))}
+        />
+      </div>
+      {
+        <Button
+          className="self-end"
+          onClick={() => multiplyMatrixInArray(matrices)}>
+          =
+        </Button>
+      }
+      {result ? (
+        <div className="flex flex-col flex-grow justify-between gap-2">
+          <p className="text-center">Vector resultante</p>
+          <Matriz matrix={result} rules={{ isEditable: false, toFixed: 4 }} />
+        </div>
+      ) : null}
     </Card>
   );
 };

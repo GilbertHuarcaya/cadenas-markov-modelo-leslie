@@ -11,11 +11,11 @@ const calculatePredictionLong = (formData: FormData) => {
       JSON.parse(formData.get("leslieMatrix") as string)
     );
 
-    const result = leslieMatrix.leslieEstacionario();
+    const result = leslieMatrix.powerIteration();
 
     vectorHistory.map((especie) => {
       if (especie.id === Number(id)) {
-        especie.history = [result];
+        especie.stationaryVector = result || [];
       }
     });
 
