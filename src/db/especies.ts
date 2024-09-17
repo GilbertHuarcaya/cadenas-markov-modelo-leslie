@@ -11,7 +11,7 @@ const especie1 = {
   probabilidadDeSupervivencia: {
     joven_juvenil: 0.5,
     juvenil_adulto: 0.85,
-    permanecer_adulto: 0.9,
+    permanecer_adulto: 0,
   },
   poblacionInicial: {
     joven: 1000,
@@ -33,7 +33,7 @@ const especie2 = {
   probabilidadDeSupervivencia: {
     joven_juvenil: 0.4,
     juvenil_adulto: 0.7,
-    permanecer_adulto: 0.8,
+    permanecer_adulto: 0,
   },
   poblacionInicial: {
     joven: 500,
@@ -55,7 +55,7 @@ const especie3 = {
   probabilidadDeSupervivencia: {
     joven_juvenil: 0.1,
     juvenil_adulto: 0.5,
-    permanecer_adulto: 0.85,
+    permanecer_adulto: 0,
   },
   poblacionInicial: {
     joven: 10000,

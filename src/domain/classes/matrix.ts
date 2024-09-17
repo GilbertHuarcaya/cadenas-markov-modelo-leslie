@@ -1,4 +1,3 @@
-import { abs, max, eigs } from "mathjs";
 export class Matrix {
   private rows: number;
   private cols: number;
