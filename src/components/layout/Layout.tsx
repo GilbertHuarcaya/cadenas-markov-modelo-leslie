@@ -17,7 +17,7 @@ import { especies } from "@/db/especies";
 
 const Layout = () => {
   return (
-    <header className="fixed">
+    <header className="fixed bg-white w-full">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>

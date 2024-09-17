@@ -149,7 +149,10 @@ export default function Especie({
                 Vector con la poblacion en el periodo{" "}
                 {especieVectorHistory.length}
               </h2>
-              <Vector matrix={especieVectorHistory?.at(-1)} />
+              <Vector
+                matrix={especieVectorHistory?.at(-1)}
+                rules={{ toFixed: 4 }}
+              />
             </div>
           </div>
         </Card>
@@ -209,10 +212,12 @@ export default function Especie({
                             ? initialPopulationMatrix
                             : especieVectorHistory[i - 1]
                         }
+                        rules={{ toFixed: 4 }}
                       />
                       <span>=</span>
                       <Vector
                         matrix={i === 0 ? especieVectorHistory[0] : vector}
+                        rules={{ toFixed: 4 }}
                       />
                     </div>
                   </div>
