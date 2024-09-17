@@ -47,20 +47,35 @@ export class Matrix {
     this.data[row][col] = value;
   }
 
-  add(matrix: Matrix): Matrix {
-    if (this.rows !== matrix.getRows() || this.cols !== matrix.getCols()) {
-      throw new Error("Matrix dimensions must match");
-    }
-
-    const result = new Matrix({ rows: this.rows, cols: this.cols });
-
-    for (let i = 0; i < this.rows; i++) {
-      for (let j = 0; j < this.cols; j++) {
-        result.setValue(i, j, this.data[i][j] + matrix.getValue(i, j));
+  isNonNegativeAndColumnSumIsOne(): boolean {
+    // Check for non-negative values and column sums
+    for (let j = 0; j < this.cols; j++) {
+      let columnSum = 0;
+      for (let i = 0; i < this.rows; i++) {
+        const value = this.data[i][j];
+        if (value < 0) {
+          return false;
+        }
+        columnSum += value;
+      }
+      if (columnSum !== 1) {
+        return false;
       }
     }
+    return true;
+  }
 
-    return result;
+  isSquare(): boolean {
+    // Check if the matrix is square
+    if (this.rows !== this.cols) {
+      return false;
+    }
+
+    return true;
+  }
+
+  isStochastic(): boolean {
+    return this.isSquare() && this.isNonNegativeAndColumnSumIsOne();
   }
 
   multiply(matrix: Matrix): Matrix {
@@ -97,43 +112,39 @@ export class Matrix {
     return result;
   }
 
-  leslieEstacionario() {
-    const { values, eigenvectors } = eigs(this.data);
-    const maxIndex = max(max(abs(values)));
-    let vectors = eigenvectors.map((row) => max(row.value));
-    const vecDom = eigenvectors.find((row) => maxIndex === row.value);
-
-    return new Matrix({ data: [] });
-  }
-
-  isNonNegativeAndColumnSumIsOne(): boolean {
-    // Check for non-negative values and column sums
-    for (let j = 0; j < this.cols; j++) {
-      let columnSum = 0;
-      for (let i = 0; i < this.rows; i++) {
-        const value = this.data[i][j];
-        if (value < 0) {
-          return false;
-        }
-        columnSum += value;
-      }
-      if (columnSum !== 1) {
-        return false;
+  // Function to multiply matrix by a vector
+  multiplyVector(vec: number[]): number[] {
+    let result = Array(this.rows).fill(0);
+    for (let i = 0; i < this.rows; i++) {
+      for (let j = 0; j < this.cols; j++) {
+        result[i] += this.data[i][j] * vec[j];
       }
     }
-    return true;
+    return result;
   }
 
-  isSquare(): boolean {
-    // Check if the matrix is square
-    if (this.rows !== this.cols) {
-      return false;
+  normalizeVector(vec: number[]): number[] {
+    const sum = vec.reduce((acc, val) => acc + val, 0);
+    return vec.map((val) => val / sum);
+  }
+
+  powerIteration(maxIterations = 1000, tolerance = 1e-10): number[] {
+    let vec = Array(this.rows).fill(1);
+    let prevVec = Array(this.rows).fill(0);
+
+    for (let iter = 0; iter < maxIterations; iter++) {
+      prevVec = vec.slice();
+      vec = this.multiplyVector(vec);
+      vec = this.normalizeVector(vec);
+
+      let diff = vec
+        .map((v, i) => Math.abs(v - prevVec[i]))
+        .reduce((a, b) => a + b, 0);
+      if (diff < tolerance) {
+        break;
+      }
     }
 
-    return true;
-  }
-
-  isStochastic(): boolean {
-    return this.isSquare() && this.isNonNegativeAndColumnSumIsOne();
+    return vec;
   }
 }
