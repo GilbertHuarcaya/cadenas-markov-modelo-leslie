@@ -5,9 +5,9 @@ const ExplanationPercentaje = ({
 }) => {
   const [child, juvenile, adult] = data;
   const dangerCase =
-    child.value > juvenile.value && child.value > adult.value
+    child.value < juvenile.value && child.value < adult.value
       ? child
-      : juvenile.value > child.value && juvenile.value > adult.value
+      : juvenile.value < child.value && juvenile.value < adult.value
       ? juvenile
       : adult;
 
