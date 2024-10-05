@@ -27,6 +27,10 @@ const Manual: React.FC = () => {
             resultados.
           </li>
           <li>Revise los resultados en la sección de salida.</li>
+          <li>
+            Puede ver el historial de cálculo presionando el botón{" "}
+            <span className="button-primary">Mostrar Historial</span>.
+          </li>
         </ol>
       </section>
     </div>
