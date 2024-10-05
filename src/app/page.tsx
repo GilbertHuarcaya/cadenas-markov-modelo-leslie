@@ -1,4 +1,3 @@
-import Operacion from "@/components/operations/Operation";
 import Link from "next/link";
 
 export default function Home() {

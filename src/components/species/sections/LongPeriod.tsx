@@ -1,6 +1,4 @@
 import calculateEstationaryHistorial from "@/actions/calculateEstationaryHistorial";
-import calculatePredictionLong from "@/actions/calculatePredictionLong";
-import ExplanationAmount from "@/components/explanation/ExplanationAmount";
 import ExplanationPercentaje from "@/components/explanation/ExplanationPercentage";
 import Vector from "@/components/matrix/Vector";
 import { Card } from "@/components/ui/card";

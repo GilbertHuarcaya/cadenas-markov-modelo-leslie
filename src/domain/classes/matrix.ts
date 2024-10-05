@@ -143,27 +143,6 @@ export class Matrix {
   }
 
   /**
-   * Iterates the current matrix with another matrix n times.
-   * @param matrix - The matrix to iterate with.
-   * @param n - The number of iterations.
-   * @returns A new matrix that is the result of the iterations.
-   * @throws Error if the matrix dimensions do not match for multiplication.
-   */
-  iterateWithMatrixNTimes(matrix: Matrix, n: number): Matrix {
-    if (this.cols !== matrix.getRows()) {
-      throw new Error("Matrix dimensions must match for multiplication");
-    }
-
-    let result = matrix;
-
-    for (let i = 0; i < n; i++) {
-      result = this.multiply(result);
-    }
-
-    return result;
-  }
-
-  /**
    * Normaliza un vector o una matriz para que la suma de sus elementos sea igual a 1.
    * @param input - El vector o matriz a normalizar.
    * @returns Un nuevo vector o matriz que está normalizado.
