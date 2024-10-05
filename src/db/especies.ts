@@ -1,4 +1,4 @@
-const especie1 = {
+const especie1: TEspecie = {
   id: 1,
   nombre: "Elefante africano (Loxodonta africana)",
   descripcion:
@@ -11,7 +11,7 @@ const especie1 = {
   probabilidadDeSupervivencia: {
     joven_juvenil: 0.5,
     juvenil_adulto: 0.85,
-    permanecer_adulto: 0.9,
+    permanecer_adulto: 0,
   },
   poblacionInicial: {
     joven: 1000,
@@ -20,7 +20,7 @@ const especie1 = {
   },
 };
 
-const especie2 = {
+const especie2: TEspecie = {
   id: 2,
   nombre: "Águila calva (Haliaeetus leucocephalus)",
   descripcion:
@@ -33,7 +33,7 @@ const especie2 = {
   probabilidadDeSupervivencia: {
     joven_juvenil: 0.4,
     juvenil_adulto: 0.7,
-    permanecer_adulto: 0.8,
+    permanecer_adulto: 0,
   },
   poblacionInicial: {
     joven: 500,
@@ -42,29 +42,29 @@ const especie2 = {
   },
 };
 
-const especie3 = {
+const especie3: TEspecie = {
   id: 3,
   nombre: "Tortuga marina (Chelonioidea)",
   descripcion:
     "Las tortugas marinas son reptiles longevos que habitan los océanos tropicales y subtropicales de todo el mundo. Se caracterizan por su caparazón duro y aplanado, adaptado para nadar largas distancias, y sus aletas en lugar de patas, que las impulsan en el agua. Migran grandes distancias para anidar en playas específicas, donde desovan. A pesar de su longevidad, muchas especies de tortugas marinas están en peligro de extinción debido a la contaminación, la pesca incidental y la destrucción de sus áreas de anidación.",
   tasaNatalidadPromedio: {
     joven: 0,
-    juvenil: 0,
+    juvenil: 0.05,
     adulto: 0.3,
   },
   probabilidadDeSupervivencia: {
-    joven_juvenil: 0.1,
-    juvenil_adulto: 0.5,
-    permanecer_adulto: 0.85,
+    joven_juvenil: 0.3,
+    juvenil_adulto: 0.6,
+    permanecer_adulto: 0,
   },
   poblacionInicial: {
     joven: 10000,
-    juvenil: 1000,
+    juvenil: 5000,
     adulto: 500,
   },
 };
 
-const especie4 = {
+const especie4: TEspecie = {
   id: 4,
   nombre: "Ceroxylon quindiuense",
   descripcion:
@@ -86,4 +86,4 @@ const especie4 = {
   },
 };
 
-export const especies = [especie1, especie2, especie3, especie4];
+export const especies: TEspecie[] = [especie1, especie2, especie3, especie4];

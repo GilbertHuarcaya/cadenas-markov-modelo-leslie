@@ -3,7 +3,7 @@ import { Table, TableBody, TableCell, TableRow } from "../ui/table";
 
 const Vector: React.FC<TMatrixProps> = ({ matrix, rules }) => {
   return (
-    <section className="flex border-x-2 border-black rounded-lg">
+    <section className="flex border-x-2 border-black rounded-lg w-fit">
       {/* <span>[</span> */}
       <Table>
         <TableBody>
