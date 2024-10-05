@@ -20,7 +20,6 @@ const calculateEstationaryHistorial = async (formData: FormData) => {
       }
     });
 
-    /* let result = new Matrix({ data: [[1], [1], [1]] }); */
     let result = initialPopulationMatrix;
     let normalized = initialPopulationMatrix.normalize(result.getData());
 
