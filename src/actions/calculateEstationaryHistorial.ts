@@ -4,8 +4,7 @@ import { vectorHistory } from "@/db/vectorHistory";
 import { Matrix } from "@/domain/classes/matrix";
 import { revalidatePath } from "next/cache";
 
-const calculatePredictionHistorial = (formData: FormData) => {
-  const periods = formData.get("periods");
+const calculateEstationaryHistorial = async (formData: FormData) => {
   const id = formData.get("id");
   try {
     const initialPopulationMatrix = new Matrix(
@@ -17,16 +16,24 @@ const calculatePredictionHistorial = (formData: FormData) => {
     //reset history
     vectorHistory.map((especie) => {
       if (especie.id === Number(id)) {
-        especie.history = [];
+        especie.stationaryHistory = [];
       }
     });
 
+    /* let result = new Matrix({ data: [[1], [1], [1]] }); */
     let result = initialPopulationMatrix;
-    for (let i = 0; i < Number(periods); i++) {
-      result = leslieMatrix.multiply(result);
+    let normalized = initialPopulationMatrix.normalize(result.getData());
+
+    for (let i = 0; i < 1000; i++) {
+      result = leslieMatrix.multiply(normalized);
+
+      normalized = leslieMatrix.normalize(result.getData());
       vectorHistory.map((especie) => {
         if (especie.id === Number(id)) {
-          especie.history = [...especie.history, result];
+          especie.stationaryHistory = [
+            ...especie.stationaryHistory,
+            normalized,
+          ];
         }
       });
     }
@@ -39,4 +46,4 @@ const calculatePredictionHistorial = (formData: FormData) => {
   }
 };
 
-export default calculatePredictionHistorial;
+export default calculateEstationaryHistorial;

@@ -4,9 +4,10 @@ export const vectorHistory: {
   id: number;
   history: Matrix[];
   stationaryVector: number[];
+  stationaryHistory: Matrix[];
 }[] = [
-  { id: 1, history: [], stationaryVector: [] },
-  { id: 2, history: [], stationaryVector: [] },
-  { id: 3, history: [], stationaryVector: [] },
-  { id: 4, history: [], stationaryVector: [] },
+  { id: 1, history: [], stationaryVector: [], stationaryHistory: [] },
+  { id: 2, history: [], stationaryVector: [], stationaryHistory: [] },
+  { id: 3, history: [], stationaryVector: [], stationaryHistory: [] },
+  { id: 4, history: [], stationaryVector: [], stationaryHistory: [] },
 ];

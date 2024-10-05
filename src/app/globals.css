@@ -86,7 +86,7 @@
     @apply bg-background text-foreground;
   }
   .button-primary {
-    @apply p-2 bg-blue-500 text-white rounded-lg
+    @apply p-2 bg-blue-500 text-white rounded-lg disabled:bg-gray-400
   }
 }
 
