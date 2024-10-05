@@ -19,7 +19,7 @@ const LongPeriod = async ({
   initialPopulationMatrix: Matrix;
   }) => {
   //Obtener el historial estacionario de la especie
-  const especieStationaryHistory = vectorHistory.find(
+  const especieStationaryHistory = await vectorHistory.find(
     (e) => e.id === especie.id
   )?.stationaryHistory;
   const lastSpecieStationary = especieStationaryHistory?.at(-1);

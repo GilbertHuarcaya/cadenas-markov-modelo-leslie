@@ -164,31 +164,6 @@ export class Matrix {
   }
 
   /**
-   * Multiplica la matriz actual con un vector.
-   * @param vec - El vector con el que se va a multiplicar.
-   * @returns Un nuevo vector que es el resultado de la multiplicación.
-   */
-  multiplyVector(vec: number[]): number[] {
-    let result = Array(this.rows).fill(0);
-    for (let i = 0; i < this.rows; i++) {
-      for (let j = 0; j < this.cols; j++) {
-        result[i] += this.data[i][j] * vec[j];
-      }
-    }
-    return result;
-  }
-
-  /**
-   * Normaliza un vector para que la suma de sus elementos sea igual a 1.
-   * @param vec - El vector a normalizar.
-   * @returns Un nuevo vector que está normalizado.
-   */
-  normalizeVector(vec: number[]): number[] {
-    const sum = vec.reduce((acc, val) => acc + val, 0);
-    return vec.map((val) => val / sum);
-  }
-
-  /**
    * Normaliza un vector o una matriz para que la suma de sus elementos sea igual a 1.
    * @param input - El vector o matriz a normalizar.
    * @returns Un nuevo vector o matriz que está normalizado.
@@ -225,42 +200,5 @@ export class Matrix {
       });
       return new Matrix({ data: [normalizedVec] });
     }
-  }
-  /**
-   * Realiza el método de iteración de potencia para encontrar el vector propio dominante.
-   * @param maxIterations - El número máximo de iteraciones (por defecto es 1000).
-   * @param tolerance - La tolerancia para la convergencia (por defecto es 1e-10).
-   * @returns El vector propio dominante.
-   */
-  powerIteration(maxIterations = 1000, tolerance = 1e-10): number[] {
-    //maxIterations = 1000 es el número máximo de iteraciones que se realizarán para encontrar el vector propio dominante.
-    //1e-10 es una notación científica que representa el número (1 \times 10^{-10}). En otras palabras, es un número muy pequeño, equivalente a 0.0000000001.
-    // Inicializa el vector con todos los elementos en 1
-    let vec = Array(this.rows).fill(1); // [ 1, 1, 1 ]
-    // Inicializa el vector previo con todos los elementos en 0
-    let prevVec = Array(this.rows).fill(0); // [ 0, 0, 0 ]
-
-    // Itera hasta el número máximo de iteraciones
-    for (let iter = 0; iter < maxIterations; iter++) {
-      // Copia el vector actual al vector previo
-      prevVec = vec.slice();
-      // Multiplica la matriz actual con el vector
-      vec = this.multiplyVector(vec);
-      // Normaliza el vector resultante
-      vec = this.normalizeVector(vec);
-
-      // Calcula la diferencia entre el vector actual y el vector previo
-      let diff = vec
-        .map((v, i) => Math.abs(v - prevVec[i]))
-        .reduce((a, b) => a + b, 0);
-
-      // Si la diferencia es menor que la tolerancia, se considera que ha convergido
-      if (diff < tolerance) {
-        break;
-      }
-    }
-
-    // Devuelve el vector propio dominante
-    return vec;
   }
 }
